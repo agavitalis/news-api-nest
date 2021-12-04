@@ -6,10 +6,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Autocheck Search API')
-    .setDescription('The autocheck API description')
+    .setTitle('Hacker News Search API')
+    .setDescription('The Hacker News Search API Description')
     .setVersion('1.0')
-    .addTag('auto-check')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/', app, document);
