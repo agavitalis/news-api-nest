@@ -71,3 +71,11 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+Your app should have three endpoints:
+
+1. Top 10 most occurring words in the titles of the last 25 stories
+
+2. Top 10 most occurring words in the titles of the post of exactly the last week
+
+3.  Top 10 most occurring words in titles of the last 600 stories of users with at least 10.000 karma

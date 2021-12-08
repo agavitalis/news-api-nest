@@ -1,18 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { CreateNewsDto } from './dto/create-news.dto';
-import { UpdateNewsDto } from './dto/update-news.dto';
+import { HttpService } from '@nestjs/axios';
+import { Axios } from './utils/response';
+import { lastValueFrom, map } from 'rxjs';
 
 @Injectable()
 export class NewsService {
-  getTopWordsInStories() {
-    return `This action returns all search`;
+  constructor(private httpService: HttpService) {}
+
+  async getLastStoryId(): Promise<number> {
+    const maxItem = lastValueFrom(this.httpService
+      .get('https://hacker-news.firebaseio.com/v0/maxitem.json?print=pretty')
+        .pipe(map((response) => response.data)),
+    );
+    return <number>(<unknown>maxItem);
   }
 
-  getTopWordsInPosts() {
-    return `This action returns all search`;
+  async getAUser(userId: string): Promise<any> {
+    return await Axios(
+      `https://hacker-news.firebaseio.com/v0/user/${userId}.json?print=pretty`,
+      'get',
+    );
   }
 
-  getTopWordsInUserStories() {
-    return `This action returns all search`;
+  async getAStory(storyId: string): Promise<any> {
+    return await Axios(
+      `https://hacker-news.firebaseio.com/v0/item/${storyId}.json?print=pretty`,
+      'get',
+    );
   }
 }
