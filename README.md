@@ -1,11 +1,8 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+  News API Nest
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+  <p align="center">A News API usign Hacker News API.</p>
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
@@ -19,14 +16,15 @@
     <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
   <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[News-API-Nest](https://github.com/agavitalis/news-api-nest.git) A search api with nest.
 
 ## Installation
+
+Ensure you have a stable internt connection, open the application via your terminal and punch the following commands:
 
 ```bash
 $ npm install
@@ -44,7 +42,7 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
-
+The app will be live on https://localhost:5000 which can be access via your browser.
 ## Test
 
 ```bash
@@ -58,24 +56,22 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Ogbonna Vitalis](agavitalisogbonna@gmail.com)
 
-## License
+## Endpoints
 
 Nest is [MIT licensed](LICENSE).
 
-Your app should have three endpoints:
+This app has the following  three endpoints:
 
 1. Top 10 most occurring words in the titles of the last 25 stories
 
 2. Top 10 most occurring words in the titles of the post of exactly the last week
 
 3.  Top 10 most occurring words in titles of the last 600 stories of users with at least 10.000 karma
+
+## License
+
+Nest is [MIT licensed](LICENSE).
