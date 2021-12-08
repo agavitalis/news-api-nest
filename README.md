@@ -29,7 +29,7 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 The app will be live on http://localhost:5000, Open on your browser and access the endpoints using swagger.
-## Test(Not Covered)
+## Test
 
 ```bash
 # unit tests
