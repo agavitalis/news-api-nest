@@ -16,13 +16,10 @@ export class NewsController {
 
   @Get('getTopWordsInLast25Stories')
   async getTopWordsInLast25Stories(@Res() res: Response) {
-    const lastStoryId = await this.newsService.getLastStoryId();
-    const last25StoryId = lastStoryId - 25;
-    const storyIds = [];
-    for (let index = last25StoryId; index < lastStoryId; index++) {
-      storyIds.push(index);
-    }
-    const stories = await mapConcurrently(storyIds, async (storyId) => {
+    const lastestStoryIds = await this.newsService.getLatestStories();
+    const lastStoryIds = lastestStoryIds.slice(0, 25);
+
+    const stories = await mapConcurrently(lastStoryIds, async (storyId) => {
       return await this.newsService.getAStory(storyId);
     });
 
@@ -39,33 +36,30 @@ export class NewsController {
     }
   }
 
-  @Get('getTopWordsInUserStories:userId')
-  async getTopWordsInUserStories(
-    @Res() res: Response,
-    @Param('userId') userId: string,
-  ) {
-    const user = await this.newsService.getAUser(userId);
+  @Get('getTopWordsInLast600StoriesOfUsers')
+  async getTopWordsInLast600StoriesOfUsers(@Res() res: Response) {
+    const lastestStoryIds = await this.newsService.getLatestStories();
+    const lastStoryIds = lastestStoryIds.slice(0, 600);
 
-    if (!user) {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        message: 'User not found',
-      });
-    }
-
-    if (user.karma < 10) {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        message: 'User Karma less than 10',
-      });
-    }
-
-    const userStoryIds = user.submitted.slice(0, 599);
-    const stories = await mapConcurrently(userStoryIds, async (userStoryId) => {
-      return await this.newsService.getAStory(userStoryId as string);
+    const stories = await mapConcurrently(lastStoryIds, async (storyId) => {
+      return await this.newsService.getAStory(storyId);
     });
 
+    const userIds: Array<string> = stories.map((x) => x?.by);
+    const users = await mapConcurrently(userIds, async (userId) => {
+      return await this.newsService.getAUser(userId);
+    });
+
+    const qualifiedUsers = users.filter((user) => user.karma >= 10);
+    const qualifiedUserIds: Array<string> = qualifiedUsers.map((x) => x.id);
+
+    const filteredStories = stories.filter((story) =>
+      qualifiedUserIds.includes(story?.by),
+    );
+
     let title: string;
-    for (let index = 0; index < stories.length; index++) {
-      if (stories[index].title != null) {
+    for (let index = 0; index < filteredStories.length; index++) {
+      if (stories[index]?.title != null) {
         title = title + ' ' + stories[index].title;
       }
     }
@@ -79,17 +73,18 @@ export class NewsController {
   @Get('getTopWordsInStoryOfLastWeek:storyId')
   async getTopWordsInStoryOfLastWeek(
     @Res() res: Response,
-    @Param('storyId') storyId: string,
+    @Param('storyId') storyId: number,
   ) {
     const story = await this.newsService.getAStory(storyId);
     const storyTime = new Date(story.time).toISOString();
     const storyWeek = getWeekNumber(new Date(storyTime));
     const currentWeek = getWeekNumber(new Date());
-    // if (currentWeek[0] != storyWeek[0] || currentWeek[1] - storyWeek[1] != 1) {
-    //   return res.status(HttpStatus.BAD_REQUEST).json({
-    //     message: 'Only  stories of the past weeks is needed',
-    //   });
-    // }
+
+    if (currentWeek[0] != storyWeek[0] || currentWeek[1] - storyWeek[1] != 1) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: 'Only  stories of the past weeks is needed',
+      });
+    }
 
     if (story.title != null) {
       const wordObject = trasformToObject(story.title);
