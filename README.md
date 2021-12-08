@@ -62,7 +62,6 @@ $ npm run test:cov
 
 ## Endpoints
 
-Nest is [MIT licensed](LICENSE).
 
 This app has the following  three endpoints:
 
