@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { Axios } from './utils/response';
+import { Axios } from './utils/tools';
 import { lastValueFrom, map } from 'rxjs';
 
 @Injectable()

@@ -65,16 +65,27 @@ export function trasformToObject( sentence: string){
   return wordObject;
 }
 
-export function sortObject(wordObject:any): any[]{
+export function sortObject(wordObject:any): any{
   const sortable = [];
-    for (const word in wordObject) {
-      sortable.push([word, wordObject[word]]);
+  for (const word in wordObject) {
+    sortable.push([word, wordObject[word]]);
+  }
+
+  sortable.sort(function (a, b) {
+    return b[1] - a[1];
+  });
+
+  let responseObject = {}
+  let counter = 0
+  for (let index = 0; index < sortable.length; index++) {
+    const key = sortable[index][0].slice(1);
+    const object = {};
+    object[key] = sortable[index][1];
+    if(key != 'undefined' && counter != 10){
+      responseObject = {...responseObject, ...object}
+      counter++
     }
-
-    sortable.sort(function (a, b) {
-      return b[1] - a[1];
-    });
-
-    return sortable;
+  }
+  return responseObject;
 }
 

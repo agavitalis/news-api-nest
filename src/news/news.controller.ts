@@ -7,7 +7,7 @@ import {
   getWeekNumber,
   trasformToObject,
   sortObject,
-} from './utils/response';
+} from './utils/tools';
 
 @ApiTags('News API')
 @Controller('news')
@@ -28,7 +28,7 @@ export class NewsController {
 
     let title: string;
     for (let index = 0; index < stories.length; index++) {
-      if (stories[index].title != null) {
+      if (stories[index].hasOwnProperty('title')) {
         title = title + ' ' + stories[index].title;
       }
     }
